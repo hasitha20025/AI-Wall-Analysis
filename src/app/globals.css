@@ -1,0 +1,292 @@
+
+@import "tailwindcss";
+
+/* Custom CSS variables for Wall Damage Detection & Cost Estimation */
+:root {
+  /* Primary Brand Colors - Professional Construction Theme */
+  --color-primary: #1e293b;        /* Slate 800 - Deep Professional Blue-Gray */
+  --color-primary-light: #334155;  /* Slate 700 - Lighter Primary */
+  --color-primary-dark: #0f172a;   /* Slate 900 - Darkest Primary */
+  
+  /* Secondary Colors */
+  --color-secondary: #64748b;      /* Slate 500 - Neutral Gray */
+  --color-secondary-light: #94a3b8; /* Slate 400 - Light Gray */
+  --color-secondary-dark: #475569;  /* Slate 600 - Dark Gray */
+  
+  /* Accent Colors - Construction Industry */
+  --color-accent: #f97316;         /* Orange 500 - Safety/Warning Orange */
+  --color-accent-light: #fb923c;   /* Orange 400 - Light Accent */
+  --color-accent-dark: #ea580c;    /* Orange 600 - Dark Accent */
+  
+  /* Status Colors for Damage Detection */
+  --color-success: #059669;        /* Emerald 600 - No Damage/Success */
+  --color-success-light: #10b981;  /* Emerald 500 - Light Success */
+  --color-success-dark: #047857;   /* Emerald 700 - Dark Success */
+  
+  --color-warning: #d97706;        /* Amber 600 - Minor Damage */
+  --color-warning-light: #f59e0b;  /* Amber 500 - Light Warning */
+  --color-warning-dark: #b45309;   /* Amber 700 - Dark Warning */
+  
+  --color-error: #dc2626;          /* Red 600 - Major Damage/Critical */
+  --color-error-light: #ef4444;    /* Red 500 - Light Error */
+  --color-error-dark: #b91c1c;     /* Red 700 - Dark Error */
+  
+  --color-critical: #991b1b;       /* Red 800 - Severe Damage */
+  
+  /* Background Colors */
+  --color-background: #f8fafc;     /* Slate 50 - Main Background */
+  --color-background-secondary: #f1f5f9; /* Slate 100 - Secondary Background */
+  --color-background-tertiary: #e2e8f0;  /* Slate 200 - Tertiary Background */
+  
+  /* Surface Colors */
+  --color-surface: #ffffff;        /* Pure White - Cards/Surfaces */
+  --color-surface-elevated: #ffffff; /* White with shadow */
+  --color-surface-hover: #f8fafc;  /* Hover state */
+  
+  /* Text Colors */
+  --color-foreground: #0f172a;     /* Slate 900 - Primary Text */
+  --color-foreground-secondary: #334155; /* Slate 700 - Secondary Text */
+  --color-foreground-tertiary: #64748b;  /* Slate 500 - Tertiary Text */
+  --color-foreground-muted: #94a3b8;     /* Slate 400 - Muted Text */
+  
+  /* Border Colors */
+  --color-border: #e2e8f0;         /* Slate 200 - Default Border */
+  --color-border-light: #f1f5f9;   /* Slate 100 - Light Border */
+  --color-border-dark: #cbd5e1;    /* Slate 300 - Dark Border */
+  
+  /* Damage Type Specific Colors */
+  --color-crack: #dc2626;          /* Red 600 - Crack Damage */
+  --color-water-damage: #2563eb;   /* Blue 600 - Water Damage */
+  --color-paint-damage: #d97706;   /* Amber 600 - Paint Issues */
+  --color-structural: #991b1b;     /* Red 800 - Structural Damage */
+  
+  /* AI Analysis Colors */
+  --color-ai-primary: #6366f1;     /* Indigo 500 - AI Processing */
+  --color-ai-secondary: #8b5cf6;   /* Violet 500 - AI Secondary */
+  --color-confidence-high: #059669; /* Emerald 600 - High Confidence */
+  --color-confidence-medium: #d97706; /* Amber 600 - Medium Confidence */
+  --color-confidence-low: #dc2626;   /* Red 600 - Low Confidence */
+  
+  /* Cost Estimation Colors */
+  --color-cost-low: #059669;       /* Emerald 600 - Low Cost */
+  --color-cost-medium: #d97706;    /* Amber 600 - Medium Cost */
+  --color-cost-high: #dc2626;      /* Red 600 - High Cost */
+  --color-cost-estimate: #1e293b;  /* Slate 800 - Cost Text */
+  
+  /* Interactive Colors */
+  --color-link: #2563eb;           /* Blue 600 - Links */
+  --color-link-hover: #1d4ed8;     /* Blue 700 - Link Hover */
+  --color-focus: #2563eb;          /* Blue 600 - Focus Ring */
+  
+  /* Shadow Colors */
+  --color-shadow: rgba(15, 23, 42, 0.1);      /* Slate 900 with opacity */
+  --color-shadow-dark: rgba(15, 23, 42, 0.2); /* Darker shadow */
+  --color-shadow-light: rgba(15, 23, 42, 0.05); /* Light shadow */
+  
+  /* Glass/Backdrop Colors */
+  --color-backdrop: rgba(15, 23, 42, 0.8);    /* Dark backdrop */
+  --color-glass: rgba(255, 255, 255, 0.95);   /* Glass effect */
+  
+  /* Gradient Definitions */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  --gradient-accent: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+  --gradient-surface: linear-gradient(135deg, var(--color-surface), var(--color-background));
+  --gradient-ai: linear-gradient(135deg, var(--color-ai-primary), var(--color-ai-secondary));
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth animations */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Loading animation */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Glass morphism effect */
+.glass {
+  background: var(--color-glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Construction Theme Utility Classes */
+.bg-damage-crack { background-color: var(--color-crack); }
+.bg-damage-water { background-color: var(--color-water-damage); }
+.bg-damage-paint { background-color: var(--color-paint-damage); }
+.bg-damage-structural { background-color: var(--color-structural); }
+
+.text-damage-crack { color: var(--color-crack); }
+.text-damage-water { color: var(--color-water-damage); }
+.text-damage-paint { color: var(--color-paint-damage); }
+.text-damage-structural { color: var(--color-structural); }
+
+/* Confidence Level Indicators */
+.confidence-high { 
+  background-color: var(--color-confidence-high);
+  color: white;
+}
+.confidence-medium { 
+  background-color: var(--color-confidence-medium);
+  color: white;
+}
+.confidence-low { 
+  background-color: var(--color-confidence-low);
+  color: white;
+}
+
+/* Cost Level Indicators */
+.cost-low { color: var(--color-cost-low); }
+.cost-medium { color: var(--color-cost-medium); }
+.cost-high { color: var(--color-cost-high); }
+
+/* AI Processing Indicators */
+.ai-processing {
+  background: var(--gradient-ai);
+  color: white;
+}
+
+/* Professional Card Shadows */
+.shadow-construction {
+  box-shadow: 0 4px 6px -1px var(--color-shadow), 0 2px 4px -1px var(--color-shadow-light);
+}
+
+.shadow-construction-lg {
+  box-shadow: 0 10px 15px -3px var(--color-shadow), 0 4px 6px -2px var(--color-shadow-light);
+}
+
+/* Status Indicators */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.success { background-color: var(--color-success); }
+.status-dot.warning { background-color: var(--color-warning); }
+.status-dot.error { background-color: var(--color-error); }
+.status-dot.critical { background-color: var(--color-critical); }
+
+/* Professional Buttons */
+.btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--color-shadow-dark);
+}
+
+.btn-accent {
+  background: var(--gradient-accent);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-accent:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--color-shadow-dark);
+}
+
+/* Progress Bars for Analysis */
+.progress-bar {
+  background-color: var(--color-background-secondary);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gradient-accent);
+  transition: width 0.5s ease;
+}
+
+/* Damage Detection Overlays */
+.damage-overlay {
+  position: absolute;
+  border: 2px solid;
+  border-radius: 4px;
+  background: rgba(220, 38, 38, 0.1);
+  pointer-events: none;
+}
+
+.damage-overlay.crack { border-color: var(--color-crack); }
+.damage-overlay.water { border-color: var(--color-water-damage); }
+.damage-overlay.paint { border-color: var(--color-paint-damage); }
+.damage-overlay.structural { border-color: var(--color-structural); }
+
+/* Professional Data Tables */
+.data-table {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.data-table th {
+  background: var(--color-background-secondary);
+  color: var(--color-foreground-secondary);
+  font-weight: 600;
+  padding: 1rem;
+  text-align: left;
+}
+
+.data-table td {
+  padding: 1rem;
+  border-top: 1px solid var(--color-border-light);
+  color: var(--color-foreground);
+}
+
+/* Professional Loading States */
+.loading-skeleton {
+  background: linear-gradient(90deg, var(--color-background-secondary) 25%, var(--color-background-tertiary) 50%, var(--color-background-secondary) 75%);
+  background-size: 200% 100%;
+  animation: loading-shimmer 2s infinite;
+}
+
+@keyframes loading-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}

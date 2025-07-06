@@ -1,4 +1,6 @@
 import React from "react";
+import Image from "next/image";
+import logo from '../../../public/logo.png'; // Adjust the path as necessary
 
 export default function Header() {
   return (
@@ -7,8 +9,15 @@ export default function Header() {
         <div className="relative flex items-center justify-between h-16 lg:h-20">
           {/* Logo/Brand */}
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">🏗️</span>
+            <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-lg overflow-hidden bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+              <Image
+                src={logo}
+                alt="Wall Analyzer Logo"
+                width={32}
+                height={32}
+                className="w-6 h-6 lg:w-8 lg:h-8 object-contain"
+                priority
+              />
             </div>
             <div className="hidden sm:block">
               <h1 className="text-lg lg:text-xl xl:text-2xl font-bold text-white"> 

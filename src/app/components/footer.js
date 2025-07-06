@@ -1,6 +1,8 @@
 // I:\FromGit\Wall-Damage-Analysis-and-Cost-Estimation-project\src\app\components\footer.js
 "use client";
 import React from "react";
+import Image from "next/image";
+import logo from '../../../public/logo.png'; // Adjust the path as necessary
 
 export default function Footer() {
   return (
@@ -11,8 +13,15 @@ export default function Footer() {
           {/* Brand Section */}
           <div className="md:col-span-1">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-br from-[var(--color-accent)] to-[var(--color-accent-dark)] rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-xl">🏗️</span>
+              <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-lg overflow-hidden bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                <Image
+                  src={logo}
+                  alt="Wall Analyzer Logo"
+                  width={32}
+                  height={32}
+                  className="w-6 h-6 lg:w-8 lg:h-8 object-contain"
+                  priority
+                />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-white">Wall Damage Analysis and Cost Estimation</h3>

@@ -23,7 +23,7 @@ export default function SettingsDialog({ children }) {
     water: 15,
     putty: 400,
     paint: 600,
-    laborCost: 2500,
+    laborCost: 3500,
   });
 
   // Ensure component is mounted before accessing localStorage
@@ -49,7 +49,7 @@ export default function SettingsDialog({ children }) {
       water: parseFloat(settings.water) || 15,
       putty: parseFloat(settings.putty) || 400,
       paint: parseFloat(settings.paint) || 600,
-      laborCost: parseFloat(settings.laborCost) || 2500,
+      laborCost: parseFloat(settings.laborCost) || 3500,
     };
     
     // Store in localStorage for persistence (only if mounted and on client)
@@ -70,7 +70,7 @@ export default function SettingsDialog({ children }) {
       water: 15,
       putty: 400,
       paint: 600,
-      laborCost: 2500,
+      laborCost: 3500,
     });
     
     // Optional: Show confirmation that values were reset
@@ -90,7 +90,7 @@ export default function SettingsDialog({ children }) {
             water: parsed.water?.toString() || "15",
             putty: parsed.putty?.toString() || "400",
             paint: parsed.paint?.toString() || "600",
-            laborCost: parsed.laborCost?.toString() || "2500",
+            laborCost: parsed.laborCost?.toString() || "3500",
           });
         } catch (error) {
           console.error('Error loading settings:', error);
@@ -202,8 +202,8 @@ export default function SettingsDialog({ children }) {
             <Input
               id="laborCost"
               type="number"
-              step="2000"
-              placeholder="2,500"
+              step="1000"
+              placeholder="3,500"
               value={settings.laborCost}
               onChange={(e) => handleInputChange('laborCost', e.target.value)}
               className="w-full border border-gray-300 rounded-md bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 px-3 py-2"

@@ -22,7 +22,7 @@ export function useAIAnalysis() {
     water: 15,
     putty: 400,
     paint: 600,
-    laborCost: 2500,
+    laborCost: 3500,
   });
 
   // Damage repair costs per square meter in LKR
@@ -32,19 +32,85 @@ export function useAIAnalysis() {
   //   water_damage: 1200,
   //   missing_piece_damage: 1800, 
   // };
-  
+
   // Damage repair costs per square meter in LKR - calculated dynamically based on material costs
-  const damageCostRates = {
-    crack_damage: materialCosts.cement*0.2 + materialCosts.sand*0.04 + materialCosts.water*5 + materialCosts.putty*0.1 + materialCosts.paint*0.1 + materialCosts.laborCost*1,
-    flaking_paint_damage: materialCosts.putty*0.1 + materialCosts.paint*0.2 + materialCosts.laborCost*1,
-    water_damage: materialCosts.putty*0.1 + materialCosts.paint*0.2 + materialCosts.laborCost*1,
-    missing_piece_damage: materialCosts.cement*0.5 + materialCosts.sand*0.04 + materialCosts.water*5 + materialCosts.putty*0.1 + materialCosts.paint*0.2 + materialCosts.laborCost*1, 
-  };
+  // More realistic construction-based calculations
+  const damageCostRates = useMemo(() => {
+    console.log('Calculating damage rates with material costs:', materialCosts);
+    
+    // Base material consumption per square meter (realistic quantities)
+    const baseConsumption = {
+      // Cement consumption in kg per m²
+      cementPerM2: {
+        crack_repair: 2.5,      // Light cement work
+        surface_repair: 3.0,     // Surface plastering
+        heavy_repair: 5.0        // Structural repair
+      },
+      // Sand consumption in cubic feet per m²
+      sandPerM2: {
+        crack_repair: 0.8,
+        surface_repair: 1.2,
+        heavy_repair: 1.8
+      },
+      // Water consumption in liters per m²
+      waterPerM2: {
+        crack_repair: 8,
+        surface_repair: 12,
+        heavy_repair: 18
+      },
+      // Putty consumption in kg per m²
+      puttyPerM2: {
+        surface_finish: 0.8,     // For paint preparation
+        crack_filling: 0.5       // For crack sealing
+      },
+      // Paint consumption in liters per m²
+      paintPerM2: {
+        single_coat: 0.12,       // Standard coverage
+        double_coat: 0.20        // Better finish
+      }
+    };
+
+    // Calculate costs per damage type based on actual repair requirements
+    return {
+      // Crack damage: Crack filling + surface repair + painting
+      crack_damage: 
+        (materialCosts.cement / 50) * baseConsumption.cementPerM2.crack_repair +
+        (materialCosts.sand / 100) * baseConsumption.sandPerM2.crack_repair +
+        materialCosts.water * baseConsumption.waterPerM2.crack_repair +
+        materialCosts.putty * baseConsumption.puttyPerM2.crack_filling +
+        materialCosts.paint * baseConsumption.paintPerM2.single_coat +
+        materialCosts.laborCost * 1, // Full day labor rate
+
+      // Flaking paint: Surface preparation + putty + repainting
+      flaking_paint_damage:
+        materialCosts.putty * baseConsumption.puttyPerM2.surface_finish +
+        materialCosts.paint * baseConsumption.paintPerM2.double_coat +
+        materialCosts.laborCost * 1,// Full day labor rate
+
+      // Water damage: Surface repair + waterproofing + painting
+      water_damage:
+        (materialCosts.cement / 50) * baseConsumption.cementPerM2.surface_repair +
+        (materialCosts.sand / 100) * baseConsumption.sandPerM2.surface_repair +
+        materialCosts.water * baseConsumption.waterPerM2.surface_repair +
+        materialCosts.putty * baseConsumption.puttyPerM2.surface_finish +
+        materialCosts.paint * baseConsumption.paintPerM2.double_coat +
+        materialCosts.laborCost * 1, // Full day labor rate
+      
+      // Missing piece: Structural repair + plastering + painting
+      missing_piece_damage:
+        (materialCosts.cement / 50) * baseConsumption.cementPerM2.heavy_repair +
+        (materialCosts.sand / 100) * baseConsumption.sandPerM2.heavy_repair +
+        materialCosts.water * baseConsumption.waterPerM2.heavy_repair +
+        materialCosts.putty * baseConsumption.puttyPerM2.surface_finish +
+        materialCosts.paint * baseConsumption.paintPerM2.double_coat +
+        materialCosts.laborCost * 1, // Full day labor rate
+    };
+  }, [materialCosts]);
 
   // Define how many pixels represent 1.5 meter (this is based on your camera setup)
 
   const PIXELS_PER_1_5_METER = 1414; // Example: 1414 pixels = 1.5 meter
-  const PIXELS_PER_2_METER = 1163; // Example: 1163 pixels = 2 meter
+  //const PIXELS_PER_2_METER = 1163; // Example: 1163 pixels = 2 meter
   
   const PIXEL_TO_M2 = 1 / (PIXELS_PER_1_5_METER * PIXELS_PER_1_5_METER);
 
@@ -56,6 +122,7 @@ export function useAIAnalysis() {
         const savedSettings = localStorage.getItem('wallAnalysisSettings');
         if (savedSettings) {
           const parsed = JSON.parse(savedSettings);
+          console.log('Loading saved settings:', parsed); // Debug log
           setMaterialCosts(parsed);
         }
       } catch (error) {
@@ -65,15 +132,19 @@ export function useAIAnalysis() {
 
     // Listen for settings updates
     const handleSettingsUpdate = (event) => {
+      console.log('Settings updated:', event.detail); // Debug log
       setMaterialCosts(event.detail);
     };
 
-    loadSettings();
-    window.addEventListener('settingsUpdated', handleSettingsUpdate);
-    
-    return () => {
-      window.removeEventListener('settingsUpdated', handleSettingsUpdate);
-    };
+    // Check if we're on the client side
+    if (typeof window !== 'undefined') {
+      loadSettings();
+      window.addEventListener('settingsUpdated', handleSettingsUpdate);
+      
+      return () => {
+        window.removeEventListener('settingsUpdated', handleSettingsUpdate);
+      };
+    }
   }, []);
 
   // Initialize AI model

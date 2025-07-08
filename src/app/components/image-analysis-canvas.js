@@ -6,8 +6,10 @@ const ImageAnalysisCanvas = forwardRef(({ uploadedImage, predictions, damageCost
   const canvasRef = useRef();
   
   // Define how many pixels represent 1 meter (this is based on your camera setup)
-  const PIXELS_PER_METER = 100; // Example: 100 pixels = 1 meter
-  const PIXEL_TO_M2 = 1 / (PIXELS_PER_METER * PIXELS_PER_METER);
+  const PIXELS_PER_1_5_METER = 1414; // Example: 1414 pixels = 1.5 meter
+  //const PIXELS_PER_2_METER = 1163; // Example: 1163 pixels = 2 meter
+  
+  const PIXEL_TO_M2 = 1 / (PIXELS_PER_1_5_METER * PIXELS_PER_1_5_METER);
 
   useImperativeHandle(ref, () => ({
     getCanvas: () => canvasRef.current,

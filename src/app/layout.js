@@ -1,4 +1,5 @@
-// I:\FromGit\Wall-Damage-Analysis-and-Cost-Estimation-project\src\app\layout.js
+
+import React from "react";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import "./globals.css";

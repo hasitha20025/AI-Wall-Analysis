@@ -1,10 +1,16 @@
 // I:\FromGit\Wall-Damage-Analysis-and-Cost-Estimation-project\src\app\components\footer.js
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import logo from '../../../public/logo.png'; // Adjust the path as necessary
 
 export default function Footer() {
+  const [currentYear, setCurrentYear] = useState('');
+
+  // Set current year on client side to prevent hydration mismatch
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear().toString());
+  }, []);
   return (
     <footer className="bg-[var(--color-primary-dark)] border-t border-[var(--color-border-dark)]">
       {/* Main footer content */}
@@ -19,7 +25,8 @@ export default function Footer() {
                   alt="Wall Analyzer Logo"
                   width={32}
                   height={32}
-                  className="w-6 h-6 lg:w-8 lg:h-8 object-contain"
+                  className="object-contain"
+                  style={{ width: 'auto', height: 'auto', maxWidth: '100%', maxHeight: '100%' }}
                   priority
                 />
               </div>
@@ -129,7 +136,7 @@ export default function Footer() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
             <p className="text-[var(--color-foreground-muted)] text-sm">
-              © {new Date().getFullYear()} WallAnalyzer. All rights reserved.
+              © {currentYear || '2024'} WallAnalyzer. All rights reserved.
             </p>
             <div className="flex items-center space-x-6 text-sm">
               <a href="#privacy" className="text-[var(--color-foreground-muted)] hover:text-[var(--color-accent)] transition-colors duration-300">

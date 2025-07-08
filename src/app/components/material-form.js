@@ -41,6 +41,38 @@ export default function MaterialForm({ onSubmit }) {
               Select Image for Analysis
             </label>
             
+            {/* Instructions */}
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-sm font-semibold text-blue-900 mb-2">📸 Photo Guidelines for Best Results</h4>
+                  <ul className="text-sm text-blue-800 space-y-1">
+                    <li className="flex items-start">
+                      <span className="text-blue-500 mr-2">•</span>
+                      <span><strong>Image Resolution:</strong> Upload image with upto (1512×2688) pixels for optimal analysis</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-blue-500 mr-2">•</span>
+                      <span><strong>Distance:</strong> Take photo from (1.5 or 2.0) meters away from the wall</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-blue-500 mr-2">•</span>
+                      <span><strong>Lighting:</strong> Ensure good lighting and avoid shadows on the wall</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-blue-500 mr-2">•</span>
+                      <span><strong>Focus:</strong> Keep the camera steady and ensure the wall is in focus</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
             {/* File Input Area */}
             <div className="relative">
               <input
@@ -89,7 +121,7 @@ export default function MaterialForm({ onSubmit }) {
                         or click to browse • Supports JPG, PNG, WebP
                       </p>
                       <p className="text-xs text-[var(--color-foreground-tertiary)]">
-                        Maximum file size: 10MB • Best results with clear wall images
+                        Maximum file size: 10MB • Follow the photo guidelines above for best results
                       </p>
                     </>
                   )}

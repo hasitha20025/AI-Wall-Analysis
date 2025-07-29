@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function DetectionResults({ 
   predictionsList, 
   totalEstimatedCost, 
-  onDownloadJson 
+  onDownloadJson  
 }) {
   const [showRawData, setShowRawData] = useState(false);
 
@@ -90,6 +90,79 @@ export default function DetectionResults({
               </div>
             </div>
           </div>
+
+          {/* Material Breakdown */}
+          {predictionsList.length > 0 && (
+            <div className="bg-[var(--color-background-secondary)] rounded-xl p-6 border border-[var(--color-border-light)]">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center">
+                  <div className="w-8 h-8 bg-[var(--color-primary)]/20 rounded-full flex items-center justify-center mr-3">
+                    <span className="text-[var(--color-primary)] text-lg">📦</span>
+                  </div>
+                  <h4 className="text-lg font-semibold text-[var(--color-foreground)]">Required Materials</h4>
+                </div>
+                <div className="bg-[var(--color-primary)]/10 text-[var(--color-primary)] px-3 py-1 rounded-full text-sm font-medium">
+                  {predictionsList.reduce((total, prediction) => 
+                    total + (prediction.materialBreakDownList ? prediction.materialBreakDownList.length : 0), 0
+                  )} items
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                {predictionsList.map((prediction, predIndex) => (
+                  prediction.materialBreakDownList && prediction.materialBreakDownList.length > 0 && (
+                    <div key={predIndex} className="bg-[var(--color-background)] rounded-lg p-4 border border-[var(--color-border-light)]">
+                      
+                      {/* <div className="flex items-center mb-3">
+                        <div className="w-4 h-4 rounded-full mr-2" style={{ backgroundColor: prediction.color || "#ef4444" }}></div>
+                        <span className="font-medium text-[var(--color-foreground)] capitalize text-sm">
+                          {prediction.class.replace(/_/g, ' ')} - Materials Needed:
+                        </span>
+                      </div> */}
+                      
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {prediction.materialBreakDownList.map((material, matIndex) => {
+                          // Parse and round the material values
+                          // Handle format like "cement 5.481398934626645 Kg" or "3500 per day"
+                          const parts = material.split(' ');
+                          
+                          let formattedMaterial;
+                          if (parts.length >= 3) {
+                            // Format: "materialName value unit"
+                            const materialName = parts[0];
+                            const value = parseFloat(parts[1]);
+                            const unit = parts.slice(2).join(' ');
+                            
+                            if (!isNaN(value)) {
+                              formattedMaterial = `${materialName} ${value.toFixed(2)} ${unit}`;
+                            } else {
+                              formattedMaterial = material;
+                            }
+                          } else {
+                            // Handle cases like "3500 per day"
+                            const value = parseFloat(parts[0]);
+                            const unit = parts.slice(1).join(' ');
+                            
+                            if (!isNaN(value) && !unit.includes('per day')) {
+                              formattedMaterial = `${value.toFixed(2)} ${unit}`;
+                            } else {
+                              formattedMaterial = material;
+                            }
+                          }
+                          
+                          return (
+                            <div key={matIndex} className="flex items-center justify-between py-2 px-3 bg-[var(--color-background-secondary)] rounded-lg">
+                              <span className="text-sm font-medium text-[var(--color-foreground)]">{formattedMaterial}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Action Buttons */}
           <button

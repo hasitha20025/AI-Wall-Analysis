@@ -109,6 +109,7 @@ export default function Home() {
               </div>
               
               {/* Prevention Guidelines Section - Full Width */}
+
               <PreventionGuidelines
                 damageTypes={predictionsList}
                 onGenerateGuidelines={handleGenerateGuidelines}
@@ -117,6 +118,7 @@ export default function Home() {
                 onGenerateSpecificAdvice={handleGenerateSpecificAdvice}
                 onGenerateMaintenanceSchedule={handleGenerateMaintenanceSchedule}
               />
+
             </div>
           )}
         </div>

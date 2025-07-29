@@ -19,11 +19,27 @@ const PreventionGuidelines = ({
     }
   }, [damageTypes, guidelines, isGenerating, isAutoGenerating, onGenerateGuidelines]);
 
+  const cleanGuidelines = (text) => {
+    if (!text) return '';
+    
+    // Remove specific sections: Maintenance Schedule and Professional vs DIY
+    let cleanedText = text
+      .replace(/4\.\s*Maintenance Schedule:[\s\S]*?(?=5\.|$)/gi, '')
+      .replace(/5\.\s*Professional vs DIY:[\s\S]*?(?=\d+\.|$)/gi, '')
+      .replace(/\n\s*\n\s*\n/g, '\n\n') // Clean up extra newlines
+      .trim();
+    
+    return cleanedText;
+  };
+
   const formatText = (text) => {
     if (!text) return '';
     
+    // First clean the guidelines, then format
+    const cleanedText = cleanGuidelines(text);
+    
     // Convert markdown-style formatting to HTML
-    return text
+    return cleanedText
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>')
       .replace(/^#{1,6}\s(.+)$/gm, '<h3 class="text-lg font-semibold text-[var(--color-foreground)] mt-4 mb-2">$1</h3>')

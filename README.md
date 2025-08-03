@@ -507,7 +507,7 @@ We love contributions! Here's how you can help make this project even better:
 
 [![Contributors](https://contrib.rocks/image?repo=hasitha20025/AI-Wall-Analysis)](https://github.com/hasitha20025/AI-Wall-Analysis/graphs/contributors)
 
-**Thank you to all our amazing contributors!** 🙏
+**Thank you to all our amazing contributors!** 
 
 </div>
 
@@ -575,7 +575,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 </div>
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 <div align="center">
 
@@ -628,3 +628,4 @@ Special thanks to:
 ⭐ **Star this repo if you found it helpful!** ⭐
 
 </div>
+

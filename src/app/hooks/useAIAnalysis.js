@@ -139,41 +139,49 @@ export function useAIAnalysis() {
       }
     };
 
-    // Calculate material estimates per damage type based on actual repair requirements
+    // Calculate material estimates per damage type based on actual repair requirements with prices
     return {
       // Crack damage: Crack filling + surface repair + painting
       crack_damage: 
-        [('Cement '+ (baseConsumption.cementPerM2.crack_repair * areaInM2)+ ' Kg') ,
-        ('Sand '+ (baseConsumption.sandPerM2.crack_repair * areaInM2)+ ' Kg') ,
-        ('Water '+ (baseConsumption.waterPerM2.crack_repair * areaInM2)+ ' L') ,
-        ('Putty '+ (baseConsumption.puttyPerM2.crack_filling * areaInM2)+ ' Kg') ,
-        ('Paint '+ (baseConsumption.paintPerM2.single_coat * areaInM2)+ ' L') ,
-        ('Labor Cost LKR '+ materialCosts.laborCost )], // Full labor cost
+        [
+          `Cement ${(baseConsumption.cementPerM2.crack_repair * areaInM2).toFixed(2)} Kg - LKR ${((materialCosts.cement / 50) * baseConsumption.cementPerM2.crack_repair * areaInM2).toFixed(2)}`,
+          `Sand ${(baseConsumption.sandPerM2.crack_repair * areaInM2).toFixed(2)} Kg - LKR ${((materialCosts.sand / 100) * baseConsumption.sandPerM2.crack_repair * areaInM2).toFixed(2)}`,
+          `Water ${(baseConsumption.waterPerM2.crack_repair * areaInM2).toFixed(2)} L - LKR ${(materialCosts.water * baseConsumption.waterPerM2.crack_repair * areaInM2).toFixed(2)}`,
+          `Putty ${(baseConsumption.puttyPerM2.crack_filling * areaInM2).toFixed(2)} Kg - LKR ${(materialCosts.putty * baseConsumption.puttyPerM2.crack_filling * areaInM2).toFixed(2)}`,
+          `Paint ${(baseConsumption.paintPerM2.single_coat * areaInM2).toFixed(2)} L - LKR ${(materialCosts.paint * baseConsumption.paintPerM2.single_coat * areaInM2).toFixed(2)}`,
+          `Labor Cost - LKR ${materialCosts.laborCost.toFixed(2)}`
+        ],
 
       // Flaking paint: Surface preparation + putty + repainting
       flaking_paint_damage:
-        [('Putty '+ (baseConsumption.puttyPerM2.surface_finish * areaInM2)+ ' Kg') ,
-        ('Water '+ (baseConsumption.waterPerM2.surface_repair * areaInM2)+ ' L') ,
-        ('Paint '+ (baseConsumption.paintPerM2.double_coat * areaInM2)+ ' L') ,
-        ('Labor Cost LKR '+ materialCosts.laborCost )], // Full labor cost
+        [
+          `Putty ${(baseConsumption.puttyPerM2.surface_finish * areaInM2).toFixed(2)} Kg - LKR ${(materialCosts.putty * baseConsumption.puttyPerM2.surface_finish * areaInM2).toFixed(2)}`,
+          `Water ${(baseConsumption.waterPerM2.surface_repair * areaInM2).toFixed(2)} L - LKR ${(materialCosts.water * baseConsumption.waterPerM2.surface_repair * areaInM2).toFixed(2)}`,
+          `Paint ${(baseConsumption.paintPerM2.double_coat * areaInM2).toFixed(2)} L - LKR ${(materialCosts.paint * baseConsumption.paintPerM2.double_coat * areaInM2).toFixed(2)}`,
+          `Labor Cost - LKR ${materialCosts.laborCost.toFixed(2)}`
+        ],
 
       // Water damage: Surface repair + waterproofing + painting
       water_damage:
-        [('Cement '+ (baseConsumption.cementPerM2.surface_repair * areaInM2) + ' Kg'),
-        ('Sand '+ (baseConsumption.sandPerM2.surface_repair * areaInM2) + ' Kg'),
-        ('Water '+ (baseConsumption.waterPerM2.surface_repair * areaInM2) + ' L'),
-        ('Putty '+ (baseConsumption.puttyPerM2.surface_finish * areaInM2) + ' Kg'),
-        ('Paint '+ (baseConsumption.paintPerM2.double_coat * areaInM2) + ' L'),
-        ('Labor Cost LKR '+ materialCosts.laborCost )], // Full labor cost
+        [
+          `Cement ${(baseConsumption.cementPerM2.surface_repair * areaInM2).toFixed(2)} Kg - LKR ${((materialCosts.cement / 50) * baseConsumption.cementPerM2.surface_repair * areaInM2).toFixed(2)}`,
+          `Sand ${(baseConsumption.sandPerM2.surface_repair * areaInM2).toFixed(2)} Kg - LKR ${((materialCosts.sand / 100) * baseConsumption.sandPerM2.surface_repair * areaInM2).toFixed(2)}`,
+          `Water ${(baseConsumption.waterPerM2.surface_repair * areaInM2).toFixed(2)} L - LKR ${(materialCosts.water * baseConsumption.waterPerM2.surface_repair * areaInM2).toFixed(2)}`,
+          `Putty ${(baseConsumption.puttyPerM2.surface_finish * areaInM2).toFixed(2)} Kg - LKR ${(materialCosts.putty * baseConsumption.puttyPerM2.surface_finish * areaInM2).toFixed(2)}`,
+          `Paint ${(baseConsumption.paintPerM2.double_coat * areaInM2).toFixed(2)} L - LKR ${(materialCosts.paint * baseConsumption.paintPerM2.double_coat * areaInM2).toFixed(2)}`,
+          `Labor Cost - LKR ${materialCosts.laborCost.toFixed(2)}`
+        ],
 
       // Missing piece: Structural repair + plastering + painting
       missing_piece_damage:
-        [('Cement '+ (baseConsumption.cementPerM2.heavy_repair * areaInM2)+ ' Kg') ,
-        ('Sand '+ (baseConsumption.sandPerM2.heavy_repair * areaInM2)+ ' Kg') ,
-        ('Water '+ (baseConsumption.waterPerM2.heavy_repair * areaInM2)+ ' L') ,
-        ('Putty '+ (baseConsumption.puttyPerM2.surface_finish * areaInM2)+ ' Kg') ,
-        ('Paint '+ (baseConsumption.paintPerM2.double_coat * areaInM2)+ ' L') ,
-        ('Labor Cost LKR '+ materialCosts.laborCost )] // Full labor cost
+        [
+          `Cement ${(baseConsumption.cementPerM2.heavy_repair * areaInM2).toFixed(2)} Kg - LKR ${((materialCosts.cement / 50) * baseConsumption.cementPerM2.heavy_repair * areaInM2).toFixed(2)}`,
+          `Sand ${(baseConsumption.sandPerM2.heavy_repair * areaInM2).toFixed(2)} Kg - LKR ${((materialCosts.sand / 100) * baseConsumption.sandPerM2.heavy_repair * areaInM2).toFixed(2)}`,
+          `Water ${(baseConsumption.waterPerM2.heavy_repair * areaInM2).toFixed(2)} L - LKR ${(materialCosts.water * baseConsumption.waterPerM2.heavy_repair * areaInM2).toFixed(2)}`,
+          `Putty ${(baseConsumption.puttyPerM2.surface_finish * areaInM2).toFixed(2)} Kg - LKR ${(materialCosts.putty * baseConsumption.puttyPerM2.surface_finish * areaInM2).toFixed(2)}`,
+          `Paint ${(baseConsumption.paintPerM2.double_coat * areaInM2).toFixed(2)} L - LKR ${(materialCosts.paint * baseConsumption.paintPerM2.double_coat * areaInM2).toFixed(2)}`,
+          `Labor Cost - LKR ${materialCosts.laborCost.toFixed(2)}`
+        ]
     };
   };
 

@@ -44,9 +44,11 @@ Transform your wall damage assessment process with cutting-edge AI technology! T
 
 ### 💰 Smart Cost Estimation
 - **Dynamic Pricing**: Calculates repair costs based on current material prices
+- **Individual Material Pricing**: Shows detailed cost breakdown for each material (cement, sand, water, putty, paint)
 - **Customizable Rates**: Adjust material and labor costs through settings
-- **Detailed Breakdown**: Shows cost per damage type and total estimation
+- **Detailed Breakdown**: Shows cost per damage type with itemized material pricing
 - **Real-time Updates**: Cost calculations update when material prices change
+- **Professional Format**: "Material Quantity Unit - LKR Price" for complete transparency
 
 </td>
 <td width="50%">
@@ -236,6 +238,41 @@ flowchart LR
 4. **💰 Cost Estimation**: See detailed repair costs and material breakdown
 5. **🧠 AI Recommendations**: Generate prevention guidelines and maintenance advice
 6. **📁 Export Data**: Download complete analysis results for your records
+
+## 🔧 Enhanced Material Breakdown
+
+### 💎 **New Feature: Individual Material Pricing**
+
+Our latest update includes detailed cost transparency for every material used in repair calculations:
+
+```json
+{
+  "materialBreakDownList": [
+    "Cement 0.58 Kg - LKR 20.88",
+    "Sand 0.23 Kg - LKR 21.06", 
+    "Water 2.34 L - LKR 35.07",
+    "Putty 0.16 Kg - LKR 62.29",
+    "Paint 0.04 L - LKR 23.36",
+    "Labor Cost - LKR 3500.00"
+  ]
+}
+```
+
+### 📋 **Material Calculation Logic**
+
+| Material | Pricing Formula | Example Calculation |
+|:---:|:---|:---|
+| **Cement** | `(LKR 1800 ÷ 50kg) × quantity` | `36 × 0.58kg = LKR 20.88` |
+| **Sand** | `(LKR 9000 ÷ 100kg) × quantity` | `90 × 0.23kg = LKR 21.06` |
+| **Water** | `LKR 15 × quantity` | `15 × 2.34L = LKR 35.07` |
+| **Putty** | `LKR 400 × quantity` | `400 × 0.16kg = LKR 62.29` |
+| **Paint** | `LKR 600 × quantity` | `600 × 0.04L = LKR 23.36` |
+
+**Benefits:**
+- 🎯 **Complete Transparency**: See exactly what each material costs
+- 📊 **Better Budget Planning**: Itemized breakdown for accurate estimates
+- 🔄 **Real-time Updates**: Prices adjust when you change material rates
+- 💰 **Professional Format**: Industry-standard cost presentation
 
 ## ⚙️ Configuration
 
@@ -488,7 +525,45 @@ We love contributions! Here's how you can help make this project even better:
 
 </div>
 
-## 📄 License
+## � Changelog
+
+### 🚀 **Version 2.1.0** - *Latest* (August 2025)
+
+#### ✨ **New Features**
+- **💰 Enhanced Material Breakdown**: Individual pricing for each material (cement, sand, water, putty, paint)
+- **📊 Detailed Cost Transparency**: Shows exact cost per material with format "Material Quantity Unit - LKR Price"
+- **🔧 Improved Cost Calculations**: More accurate material consumption based on construction industry standards
+
+#### 🐛 **Bug Fixes**
+- Fixed labor cost integration in total cost calculations
+- Improved currency formatting with 2 decimal places
+- Enhanced prevention guidelines filtering system
+
+#### 📚 **Documentation**
+- Comprehensive README with professional structure
+- Added material calculation formulas and examples
+- Enhanced setup guides and troubleshooting sections
+
+### 📋 **Previous Versions**
+
+<details>
+<summary>View Version History</summary>
+
+#### **Version 2.0.0** (July 2025)
+- 🎨 Professional UI redesign with dark color scheme
+- 🖼️ Hero section background image integration
+- ⚙️ Advanced settings management system
+- 🧠 Google Gemini AI integration for prevention guidelines
+
+#### **Version 1.0.0** (June 2025)
+- 🤖 Initial AI-powered wall damage detection
+- 💰 Basic cost estimation system
+- 📱 Responsive web application
+- 📁 JSON export functionality
+
+</details>
+
+## �📄 License
 
 <div align="center">
 

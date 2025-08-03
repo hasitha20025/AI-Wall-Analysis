@@ -71,40 +71,37 @@ export function useAIAnalysis() {
       }
     };
 
-    // Calculate costs per damage type based on actual repair requirements
+    // Calculate costs per damage type based on actual repair requirements (MATERIALS ONLY)
     return {
-      // Crack damage: Crack filling + surface repair + painting
+      // Crack damage: Crack filling + surface repair + painting (materials only)
       crack_damage: 
         (materialCosts.cement / 50) * baseConsumption.cementPerM2.crack_repair +
         (materialCosts.sand / 100) * baseConsumption.sandPerM2.crack_repair +
         materialCosts.water * baseConsumption.waterPerM2.crack_repair +
         materialCosts.putty * baseConsumption.puttyPerM2.crack_filling +
-        materialCosts.paint * baseConsumption.paintPerM2.single_coat +
-        materialCosts.laborCost * 1, // Full day labor rate
+        materialCosts.paint * baseConsumption.paintPerM2.single_coat,
 
-      // Flaking paint: Surface preparation + putty + repainting
+      // Flaking paint: Surface preparation + putty + repainting (materials only)
       flaking_paint_damage:
         materialCosts.putty * baseConsumption.puttyPerM2.surface_finish +
-        materialCosts.paint * baseConsumption.paintPerM2.double_coat +
-        materialCosts.laborCost * 1,// Full day labor rate
+        materialCosts.water * baseConsumption.waterPerM2.surface_repair +
+        materialCosts.paint * baseConsumption.paintPerM2.double_coat,
 
-      // Water damage: Surface repair + waterproofing + painting
+      // Water damage: Surface repair + waterproofing + painting (materials only)
       water_damage:
         (materialCosts.cement / 50) * baseConsumption.cementPerM2.surface_repair +
         (materialCosts.sand / 100) * baseConsumption.sandPerM2.surface_repair +
         materialCosts.water * baseConsumption.waterPerM2.surface_repair +
         materialCosts.putty * baseConsumption.puttyPerM2.surface_finish +
-        materialCosts.paint * baseConsumption.paintPerM2.double_coat +
-        materialCosts.laborCost * 1, // Full day labor rate
+        materialCosts.paint * baseConsumption.paintPerM2.double_coat,
       
-      // Missing piece: Structural repair + plastering + painting
+      // Missing piece: Structural repair + plastering + painting (materials only)
       missing_piece_damage:
         (materialCosts.cement / 50) * baseConsumption.cementPerM2.heavy_repair +
         (materialCosts.sand / 100) * baseConsumption.sandPerM2.heavy_repair +
         materialCosts.water * baseConsumption.waterPerM2.heavy_repair +
         materialCosts.putty * baseConsumption.puttyPerM2.surface_finish +
-        materialCosts.paint * baseConsumption.paintPerM2.double_coat +
-        materialCosts.laborCost * 1, // Full day labor rate
+        materialCosts.paint * baseConsumption.paintPerM2.double_coat,
     };
   }, [materialCosts]);
 
@@ -146,36 +143,37 @@ export function useAIAnalysis() {
     return {
       // Crack damage: Crack filling + surface repair + painting
       crack_damage: 
-        [('Cement '+ baseConsumption.cementPerM2.crack_repair * areaInM2+ ' Kg') ,
-        ('Sand '+ baseConsumption.sandPerM2.crack_repair * areaInM2+ ' Kg') ,
-        ('Water '+ baseConsumption.waterPerM2.crack_repair * areaInM2+ ' L') ,
-        ('Putty '+ baseConsumption.puttyPerM2.crack_filling * areaInM2+ ' Kg') ,
-        ('Paint '+ baseConsumption.paintPerM2.single_coat * areaInM2+ ' L') ,
-        ('LKR '+ materialCosts.laborCost + ' per day')], // Full day labor rate
+        [('Cement '+ (baseConsumption.cementPerM2.crack_repair * areaInM2)+ ' Kg') ,
+        ('Sand '+ (baseConsumption.sandPerM2.crack_repair * areaInM2)+ ' Kg') ,
+        ('Water '+ (baseConsumption.waterPerM2.crack_repair * areaInM2)+ ' L') ,
+        ('Putty '+ (baseConsumption.puttyPerM2.crack_filling * areaInM2)+ ' Kg') ,
+        ('Paint '+ (baseConsumption.paintPerM2.single_coat * areaInM2)+ ' L') ,
+        ('Labor Cost LKR '+ materialCosts.laborCost )], // Full labor cost
 
       // Flaking paint: Surface preparation + putty + repainting
       flaking_paint_damage:
-        [('Putty '+ baseConsumption.puttyPerM2.surface_finish * areaInM2+ ' Kg') ,
-        ('Paint '+ baseConsumption.paintPerM2.double_coat * areaInM2+ ' L') ,
-        ('LKR '+ materialCosts.laborCost + ' per day')], // Full day labor rate
+        [('Putty '+ (baseConsumption.puttyPerM2.surface_finish * areaInM2)+ ' Kg') ,
+        ('Water '+ (baseConsumption.waterPerM2.surface_repair * areaInM2)+ ' L') ,
+        ('Paint '+ (baseConsumption.paintPerM2.double_coat * areaInM2)+ ' L') ,
+        ('Labor Cost LKR '+ materialCosts.laborCost )], // Full labor cost
 
       // Water damage: Surface repair + waterproofing + painting
       water_damage:
-        [('Cement '+ baseConsumption.cementPerM2.surface_repair * areaInM2 + ' Kg'),
-        ('Sand '+ baseConsumption.sandPerM2.surface_repair * areaInM2 + ' Kg'),
-        ('Water '+ baseConsumption.waterPerM2.surface_repair * areaInM2 + ' L'),
-        ('Putty '+ baseConsumption.puttyPerM2.surface_finish * areaInM2 + ' Kg'),
-        ('Paint '+ baseConsumption.paintPerM2.double_coat * areaInM2 + ' L'),
-        ('LKR '+ materialCosts.laborCost + ' per day')], // Full day labor rate
+        [('Cement '+ (baseConsumption.cementPerM2.surface_repair * areaInM2) + ' Kg'),
+        ('Sand '+ (baseConsumption.sandPerM2.surface_repair * areaInM2) + ' Kg'),
+        ('Water '+ (baseConsumption.waterPerM2.surface_repair * areaInM2) + ' L'),
+        ('Putty '+ (baseConsumption.puttyPerM2.surface_finish * areaInM2) + ' Kg'),
+        ('Paint '+ (baseConsumption.paintPerM2.double_coat * areaInM2) + ' L'),
+        ('Labor Cost LKR '+ materialCosts.laborCost )], // Full labor cost
 
       // Missing piece: Structural repair + plastering + painting
       missing_piece_damage:
-        [('Cement '+ baseConsumption.cementPerM2.heavy_repair * areaInM2+ ' Kg') ,
-        ('Sand '+ baseConsumption.sandPerM2.heavy_repair * areaInM2+ ' Kg') ,
-        ('Water '+ baseConsumption.waterPerM2.heavy_repair * areaInM2+ ' L') ,
-        ('Putty '+ baseConsumption.puttyPerM2.surface_finish * areaInM2+ ' Kg') ,
-        ('Paint '+ baseConsumption.paintPerM2.double_coat * areaInM2+ ' L') ,
-        ('LKR '+ materialCosts.laborCost + ' per day')]
+        [('Cement '+ (baseConsumption.cementPerM2.heavy_repair * areaInM2)+ ' Kg') ,
+        ('Sand '+ (baseConsumption.sandPerM2.heavy_repair * areaInM2)+ ' Kg') ,
+        ('Water '+ (baseConsumption.waterPerM2.heavy_repair * areaInM2)+ ' L') ,
+        ('Putty '+ (baseConsumption.puttyPerM2.surface_finish * areaInM2)+ ' Kg') ,
+        ('Paint '+ (baseConsumption.paintPerM2.double_coat * areaInM2)+ ' L') ,
+        ('Labor Cost LKR '+ materialCosts.laborCost )] // Full labor cost
     };
   };
 
@@ -257,8 +255,11 @@ export function useAIAnalysis() {
         const areaInM2 = pixelArea * PIXEL_TO_M2;
         const damageType = prediction.class;
 
-        const rate = damageCostRates[damageType] || 0;
-        const estimatedCost = rate * areaInM2;
+        const materialRate = damageCostRates[damageType] || 0;
+        const materialCost = materialRate * areaInM2;
+        const laborCost = materialCosts.laborCost; // Full labor cost
+        const estimatedCost = materialCost + laborCost; // Materials + Full Labor
+        //const estimatedCost = materialCost ; // Materials cost only
 
         const materialBreakDownList = materialEstimates(areaInM2)[damageType] || 0;
 

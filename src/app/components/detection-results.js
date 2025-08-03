@@ -69,7 +69,7 @@ export default function DetectionResults({
                   </div>
                   <div>
                     <p className="text-[var(--color-foreground-tertiary)] mb-1">Est. Cost</p>
-                    <p className="font-medium text-[var(--color-success)]">LKR {Math.round(prediction.estimatedCost).toLocaleString()}</p>
+                    <p className="font-medium text-[var(--color-success)]">LKR {prediction.estimatedCost.toFixed(2)}</p>
                   </div>
                 </div>
               </div>
@@ -82,7 +82,7 @@ export default function DetectionResults({
               <div>
                 <p className="text-[var(--color-success)] font-medium mb-1 text-sm">Total Repair Cost</p>
                 <p className="text-2xl md:text-3xl font-bold text-[var(--color-success-dark)]">
-                  LKR {Math.round(totalEstimatedCost).toLocaleString()}
+                  LKR {totalEstimatedCost.toFixed(2)}
                 </p>
               </div>
               <div className="w-12 h-12 bg-[var(--color-success)]/20 rounded-full flex items-center justify-center">
